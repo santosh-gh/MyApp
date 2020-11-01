@@ -3,6 +3,8 @@
 # Add steps that run tests, create a NuGet package, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
+name: MyApp.ci
+
 trigger:
 - master
 
@@ -11,7 +13,17 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  Writer: 'Santosh'
+
+#- template: dev-pipelines.yml
 
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
+
+- script: 
+    echo "Greetings from your Writer [ $(Writer) ]"
+  displayName: Greetings
+- powershell: |
+    Get-ChildItem -Path Env:
+  displayName: print environment info
